@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, Colors } = require('discord.js');
 
 let mathQuizActive = false;
 let correctAnswer = null;
@@ -54,7 +54,7 @@ function startMathQuiz(interaction) {
     const embed = new EmbedBuilder()
         .setTitle('Math Quiz Started!')
         .setDescription(`What is ${num1} + ${num2}?`)
-        .setColor('RANDOM');
+        .setColor(Colors.Blue); // Use a predefined color
 
     interaction.reply({ embeds: [embed] });
 }
