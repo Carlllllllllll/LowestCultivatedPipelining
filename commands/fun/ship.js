@@ -14,8 +14,6 @@ module.exports = {
                 .setDescription('Second user to ship')
                 .setRequired(true)),
     async execute(interaction) {
-        await interaction.deferReply(); // Defers the reply to avoid interaction expiration
-
         const user1 = interaction.options.getUser('user1');
         const user2 = interaction.options.getUser('user2');
 
@@ -26,35 +24,38 @@ module.exports = {
         if (shipPercentage <= 25) {
             color = '#FF0000'; // Red
             emoji = ':broken_heart:'; // Broken heart
-            gif = 'https://images-ext-1.discordapp.net/external/po76_eNYEFsJ9RWErghJnyR-o-nR1LT5kECUroBTlk0/%3Fitemid%3D9844035/https/media1.tenor.com/images/dd3f777e5c4e2feb8f2ae0fe3f542f87/tenor.gif'; // Gif for low percentage
+            gif = 'https://media.giphy.com/media/3o6MbdhGh7dB6P5CJW/giphy.gif'; // Gif for low percentage
             message = "Maybe this ship is not meant to sail... :broken_heart:";
         } else if (shipPercentage <= 50) {
             color = '#FFA500'; // Orange
             emoji = ':orange_heart:'; // Orange heart
-            gif = 'https://images-ext-1.discordapp.net/external/RrCHQTZQ2qAv8ssHodBFNv7t0uu01Xgq_c_9gzD0zZE/https/media.tenor.com/SM8QGPNpLdMAAAAi/merge-z-merge-z-lol.gif'; // Gif for medium-low percentage
+            gif = 'https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif'; // Gif for medium-low percentage
             message = "There's some potential here... :orange_heart:";
         } else if (shipPercentage <= 75) {
             color = '#FFFF00'; // Yellow
             emoji = ':yellow_heart:'; // Yellow heart
-            gif = 'https://images-ext-1.discordapp.net/external/Q8CoyBXAlUudBLQugDJlWR1jZ6CIm3HRuAMUOtbcMg8/https/media1.tenor.com/m/c5HaEnWzTIgAAAAC/peach-goma-peach.gif?width=400&height=290'; // Gif for medium-high percentage
+            gif = 'https://media.giphy.com/media/l4pTdcifTHxP2JNNu/giphy.gif'; // Gif for medium-high percentage
             message = "Looking good! There's definitely a spark! :yellow_heart:";
         } else {
             color = '#00FF00'; // Green
             emoji = ':green_heart:'; // Green heart
-            gif = 'https://media.tenor.com/V3zIt25Q3Q0AAAAC/heart-love.gif'; // Gif for high percentage
+            gif = 'https://media.giphy.com/media/26tknCqiJrBQG6bxC/giphy.gif'; // Gif for high percentage
             message = "It's a match made in heaven! :green_heart:";
         }
 
         const embed = new EmbedBuilder()
-            .setTitle('Ship Calculator')
-            .setDescription(`${user1} ❤ ${user2}`)
-            .addFields({ name: 'Note', value: 'This command is just for fun 😃' }) // Correctly use addFields with an object
+            .setTitle('Ship rate')
+            .setDescription(`${user1.username} ❤ ${user2.username}`)
+            .addFields(
+                { name: 'Ship Percentage', value: `${shipPercentage}%` },
+                { name: 'Message', value: message }
+            )
             .setColor(color)
             .setImage(gif)
-            .setFooter({ text: `Fun command: ${emoji}` });
+            .setFooter({ text: `This ship rate is just for fun 😃` });
 
-        await interaction.editReply({ 
-            content: `The ship percentage between ${user1} and ${user2} is ${shipPercentage}%!`, 
+        await interaction.reply({ 
+            content: `The ship percentage between ${user1.username} and ${user2.username} is ${shipPercentage}%!`, 
             embeds: [embed] 
         });
     }
