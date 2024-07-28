@@ -59,14 +59,6 @@ const embeds = [
         .setDescription('Type: Commands / Prefix \n Total Commands: 13 \n Commands: \n **addreactionrole, antisetup, autorole, close-ticket, define, dictionary, giveaway, poll, generateqr, remind, status, timer, translate** \n Prefix: ! \n Total Commands: 5 \n Commands: \n **binary, button, emoji, password, worldclock** ')
         .setColor('#87CEEB'),
     new EmbedBuilder()
-        .setAuthor({
-            name: "Other",
-            iconURL: "https://c.tenor.com/60N1UesAwQkAAAAM/other.gif"
-        })
-        .setTitle('Other Commands')
-        .setDescription('Type: Prefix \n Total Commands: 6 \n Prefix: ! \n Commands: \n **christmas, diwali, dussehra, holi, ramadan, rpc** ')
-        .setColor('#87CEEB'),
-    new EmbedBuilder()
         .setTitle('Troll Commands')
         .setAuthor({
             name: "Troll",
@@ -119,36 +111,21 @@ module.exports = {
                 message.delete().catch(err => console.error('Failed to delete message:', err));
             }, 5 * 60 * 1000); // 5 minutes in milliseconds
 
-            const filter = i => i.user.id === interaction.user.id && i.isStringSelectMenu();
+            const filter = i => i.user.id === interaction.user.id;
 
             const collector = message.createMessageComponentCollector({ filter, time: 60000 });
 
             collector.on('collect', async i => {
-                if (i.customId === 'embed_select') {
+                if (i.isStringSelectMenu()) {
                     const selectedIndex = parseInt(i.values[0], 10);
                     currentPage = selectedIndex;
-                    await i.update({
-                        content: ' ',
-                        embeds: [embeds[currentPage]],
-                        components: [row1, row2]
-                    });
                 } else if (i.customId === 'next') {
                     if (currentPage < embeds.length - 1) {
                         currentPage++;
-                        await i.update({
-                            content: ' ',
-                            embeds: [embeds[currentPage]],
-                            components: [row1, row2]
-                        });
                     }
                 } else if (i.customId === 'previous') {
                     if (currentPage > 0) {
                         currentPage--;
-                        await i.update({
-                            content: ' ',
-                            embeds: [embeds[currentPage]],
-                            components: [row1, row2]
-                        });
                     }
                 }
 
@@ -168,7 +145,9 @@ module.exports = {
 
         } catch (error) {
             console.error('Error handling select menu and buttons:', error);
-            await interaction.reply('Something went wrong while processing your request. Please try again later.');
+            if (!interaction.replied) {
+                await interaction.reply('Something went wrong while processing your request. Please try again later.');
+            }
         }
     },
 };
