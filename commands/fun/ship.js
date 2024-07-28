@@ -46,10 +46,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle('Ship Calculator')
             .setDescription(`${user1} ❤ ${user2}`)
-            .addFields(
-                { name: 'Ship Percentage', value: `${shipPercentage}%` },
-                { name: 'Message', value: message }
-            )
+            .addFields('This command is just for fun 😃')
             .setColor(color)
             .setImage(gif)
             .setFooter({ text: `Fun command: ${emoji}` });
