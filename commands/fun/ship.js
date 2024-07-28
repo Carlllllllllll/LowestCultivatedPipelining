@@ -14,6 +14,8 @@ module.exports = {
                 .setDescription('Second user to ship')
                 .setRequired(true)),
     async execute(interaction) {
+        await interaction.deferReply(); // Defers the reply to avoid interaction expiration
+
         const user1 = interaction.options.getUser('user1');
         const user2 = interaction.options.getUser('user2');
 
@@ -51,7 +53,7 @@ module.exports = {
             .setImage(gif)
             .setFooter({ text: `Fun command: ${emoji}` });
 
-        await interaction.reply({ 
+        await interaction.editReply({ 
             content: `The ship percentage between ${user1} and ${user2} is ${shipPercentage}%!`, 
             embeds: [embed] 
         });
