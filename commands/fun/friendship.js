@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -10,15 +10,17 @@ module.exports = {
                 .setDescription('The user to rate friendship with')
                 .setRequired(true)),
     async execute(interaction) {
+        await interaction.deferReply(); // Acknowledge the interaction to avoid timeouts
+
         const user = interaction.options.getUser('user');
         const friendshipRating = Math.floor(Math.random() * 101); // Generates a random number between 0 and 100
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setColor('#0099ff')
             .setTitle('Friendship Rating')
             .setDescription(`${interaction.user.username} and ${user.username}'s friendship rating is ${friendshipRating}%!`)
-            .setFooter('Friendship rating is just for fun!');
+            .setFooter({ text: 'Friendship rating is just for fun!' });
 
-        await interaction.reply({ embeds: [embed] });
+        await interaction.editReply({ embeds: [embed] }); // Use editReply to send the final response
     },
 };
