@@ -45,7 +45,7 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setTitle('Ship Calculator')
-            .setDescription(`${user1.username} ❤ ${user2.username}`)
+            .setDescription(`${user1} ❤ ${user2}`)
             .addFields(
                 { name: 'Ship Percentage', value: `${shipPercentage}%` },
                 { name: 'Message', value: message }
@@ -55,7 +55,7 @@ module.exports = {
             .setFooter({ text: `Fun command: ${emoji}` });
 
         await interaction.reply({ 
-            content: `The ship percentage between ${user1.username} and ${user2.username} is ${shipPercentage}%!`, 
+            content: `The ship percentage between ${user1} and ${user2} is ${shipPercentage}%!`, 
             embeds: [embed] 
         });
     }
