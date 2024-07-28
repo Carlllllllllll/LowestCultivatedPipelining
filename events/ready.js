@@ -25,7 +25,7 @@ module.exports = {
             // Add dynamic activity with server and user count
             const serverCount = client.guilds.cache.size;
             const userCount = client.users.cache.size;
-            const dynamicActivity = { name: `watching ${serverCount} servers and ${userCount} users 🤖`, type: ActivityType.Watching };
+            const dynamicActivity = { name: ` ${serverCount} servers and ${userCount} users 🤖`, type: ActivityType.Watching };
 
             const activity = currentActivityIndex === activities.length ? dynamicActivity : activities[currentActivityIndex];
             const status = statuses[currentStatusIndex];
