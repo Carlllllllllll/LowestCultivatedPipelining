@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -43,13 +43,13 @@ module.exports = {
             emoji = '💚'; // Green heart
         }
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle('Ship Calculator')
             .setDescription(`${user1.username} ❤ ${user2.username}`)
-            .addField('Ship Percentage', `${shipPercentage}%`)
+            .addFields({ name: 'Ship Percentage', value: `${shipPercentage}%` })
             .setColor(color)
             .setFooter({ text: `Fun command: ${emoji}` });
 
-        await interaction.reply({ embeds: [embed] });
+        await interaction.reply({ content: `The ship percentage between ${user1.username} and ${user2.username} is ${shipPercentage}%!`, embeds: [embed] });
     }
 };
